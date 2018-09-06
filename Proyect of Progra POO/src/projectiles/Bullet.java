@@ -1,37 +1,31 @@
 package projectiles;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import javax.swing.ImageIcon;
 
-public class Bullet {
-    Color col;
-    private int x;
-    private int height;
-    private int width;
-    private int y;
+public class Bullet extends MovingGameObject{
+    int diameter;
+    int yVelocity;
 
-    Bullet(){
-        int width = 10;
-        int height = 10;
+    public Bullet(int xPosition, int yPosition, int diameter, Color color){
+        super(xPosition, yPosition, 0, 0, color);
+        this.diameter = diameter;
+    }
+    public int getDiameter(){
+        return diameter;
+    }
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(color);
+        g.fillRect(this.getXPosition(), this.getYPosition(), 7, 15);
 
-        int x= 0;
-        int y = 0;
-
-        String attribute = "bullet";
-        col = Color.WHITE;
     }
 
-    public void update(){
-        y -= 10;
+    @Override
+    public Rectangle getBounds() {
+        Rectangle bulletHitbox = new Rectangle(xPos, yPos, 7, 15);
+        return bulletHitbox;
     }
-
-    public void makeColor(){
-        col = Color.RED;
-    }
-
-    public void draw(Graphics g, Component c){
-        g.setColor(col);
-        g.fillOval(x,y, width, height);
-    }
-
 }
