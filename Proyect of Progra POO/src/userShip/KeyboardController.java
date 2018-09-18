@@ -1,41 +1,47 @@
 
 package userShip;
 
+import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.security.Key;
+import javax.swing.JFrame;
 
-public class KeyboardController implements KeyListener {
+public class KeyboardController extends JFrame {
 
-    private boolean[] statusOfKeys;
+    int x,y;
 
-    public  KeyboardController(){
-        statusOfKeys = new boolean[256];
-    }
-
-    public boolean getStatusOfKeys(int keyCode) {
-        if(keyCode < 0 || keyCode > 255)
-        {
-            return false;
+    public class AL extends KeyAdapter{
+        public void keyPressed(KeyEvent e){
+            int keyCode = e.getKeyCode();
+            if(keyCode == e.VK_LEFT){
+                x --;
+            }
+            if(keyCode == e.VK_RIGHT){
+                x ++;
+            }
+            if(keyCode == e.VK_UP){
+                y--;
+            }
+            if(keyCode == e.VK_DOWN){
+                y++;
+            }
         }
-        else
-        {
-            return statusOfKeys[keyCode];
+        public void keyReleased(KeyEvent e){
         }
     }
-    public void resetController(){
-        statusOfKeys = new boolean[256];
-    }
-    @Override
-    public void keyTyped(KeyEvent ke){
+    public KeyboardController(){
+        addKeyListener(new AL());
+        setTitle("Test of the Java Game");
+        setSize(250,250);
+        setResizable(false);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        x = 150;
+        y = 150;
     }
-    @Override
-    public void keyPressed(KeyEvent ke){
-        statusOfKeys[ke.getKeyCode()] = true;
-    }
-    @Override
-    public void keyReleased(KeyEvent ke ){
-        statusOfKeys[ke.getKeyCode()] = false;
+    public void paint(Graphics g){
+        g.fillOval(x,y,15,15);
+        repaint();
     }
 }
